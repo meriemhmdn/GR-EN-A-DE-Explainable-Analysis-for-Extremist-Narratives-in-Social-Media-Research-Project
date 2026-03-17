@@ -1,0 +1,67 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.Python
+venv/
+.venv/
+env/
+
+# Data & Outputs
+data/raw/
+data/processed/
+outputs/
+logs/
+*.pkl
+*.pth
+*.pt
+*.npy
+
+# Exceptions - allow sample data and datasets
+!data/sample/
+!data/sample/*.csv
+!data/sample/README.md
+!grenade_original/Contrastive_Learning_Approach/datasets/*.csv
+!grenade_original/Semi_supervised_approach/Test\ Datasets/*.csv
+
+# Output files from training/analysis
+expass_original/edge_importance_*.csv
+expass_original/convergence_files/*.csv
+expass_original/analysis_results/*.csv
+expass_original/analysis_results/*.txt
+grenade_original/Contrastive_Learning_Approach/embeddings/
+grenade_original/Contrastive_Learning_Approach/adjacency_matrices/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+*.png
+*.csv
+*.backup
+*.txt
+*.csv#
+# Fichiers lourds / inutiles
+*.pth
+*.npy
+*.pkl
+*.csv
+
+# Résultats
+analysis_results/
+
+# Python
+__pycache__/
+*.pyc
+
+# Mac
+.DS_Store
