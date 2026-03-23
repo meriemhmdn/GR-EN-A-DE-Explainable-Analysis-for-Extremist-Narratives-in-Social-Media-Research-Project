@@ -12,6 +12,7 @@ from tqdm import tqdm
 import csv
 import re
 import sys
+#from grenade_original.Contrastive_Learning_Approach.src import preprocessing
 
 from parser import argument_parser
 from datasets import DATASET_LOADERS
@@ -19,7 +20,7 @@ from model import Model
 # from torch_geometric.nn.models.gnn_explainer import GNNExplainer
 from batched_explainer import BatchedGNNExplainer as GNNExplainer
 from PGMEx import PGMExplainer
-# from intgrad import IntegratedGradExplainer
+#from intgrad import IntegratedGradExplainer
 
 DEVICE = "cpu"
 HERE = Path(__file__).parent
@@ -36,7 +37,8 @@ def get_experiment_config(exp_nb: int, grenade_root: Path) -> dict:
     Returns:
         Dictionary with 'dataset', 'label_col', and other parameters
     """
-    csv_path = grenade_root / "grenade_original/Contrastive_Learning_Approach/src/experiment_params.csv"
+    #csv_path = grenade_root / "grenade_original/Contrastive_Learning_Approach/src/experiment_params.csv"
+    csv_path = "../grenade_original/Contrastive_Learning_Approach/src/experiment_params.csv"
     
     if not csv_path.exists():
         raise FileNotFoundError(f"experiment_params.csv not found at {csv_path}")
@@ -142,10 +144,11 @@ def main(
             print(f"  Label column: {label_col}")
             
             # Load dataset using GRENADE's preprocessing
-            sys.path.insert(0, str(HERE.parent / "grenade_original/Contrastive_Learning_Approach/src"))
+            #sys.path.insert(0, str(HERE.parent / "grenade_original/Contrastive_Learning_Approach/src"))
+            sys.path.insert(0, "../grenade_original/Contrastive_Learning_Approach/src")
             
             try:
-                from preprocessing import (
+                from grenade_original.Contrastive_Learning_Approach.src.preprocessing import (
                     ToxigenDataset,
                     LGBTEnDataset,
                     MigrantsEnDataset,
@@ -169,7 +172,8 @@ def main(
                     raise ValueError(f"Unknown dataset '{dataset_name}'. Available: {list(DATASETS.keys())}")
                 
                 # Pass full path to CSV file
-                csv_path = str(HERE.parent / f"grenade_original/Contrastive_Learning_Approach/datasets/{dataset_name}.csv")
+                #csv_path = str(HERE.parent / f"grenade_original/Contrastive_Learning_Approach/datasets/{dataset_name}.csv")
+                csv_path = "../grenade_original/Contrastive_Learning_Approach/datasets/{dataset_name}.csv"
                 grenade_dataset = DATASETS[dataset_name](
                     experiment_nb=exp_nb,
                     csv_path=csv_path,
@@ -192,7 +196,8 @@ def main(
                 
             finally:
                 # Clean up sys.path
-                grenade_src = str(HERE.parent / "grenade_original/Contrastive_Learning_Approach/src")
+                #grenade_src = str(HERE.parent / "grenade_original/Contrastive_Learning_Approach/src")
+                grenade_src = "../grenade_original/Contrastive_Learning_Approach/src"
                 if grenade_src in sys.path:
                     sys.path.remove(grenade_src)
             

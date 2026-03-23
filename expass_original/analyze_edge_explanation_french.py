@@ -11,26 +11,34 @@ import numpy as np
 import pickle
 from pathlib import Path
 
-def load_toxigen_data(exp_nb=1):
-    """Load the Toxigen dataset used in GRENADE experiment."""
+def load_toxigen_data(exp_nb=4):
     possible_paths = [
-        #f"../grenade_original/Contrastive_Learning_Approach/datasets/Toxigen.csv",
-        f"../grenade_original/Contrastive_Learning_Approach/datasets/LGBTEn.csv",
-        f"data/Toxigen.csv",
+        "../grenade_original/Contrastive_Learning_Approach/datasets/Multilingual_EN_Corpus_DATA_FRENCH.xlsx",
+        "data/Multilingual_EN_Corpus_DATA_FRENCH.xlsx",
     ]
     
     for path in possible_paths:
         if Path(path).exists():
-            print(f"Loading Toxigen data from {path}...")
-            df = pd.read_csv(path)
+            print(f"Loading Multilingual_EN_Corpus_DATA_FRENCH data from {path}...")
+            
+            df = pd.read_excel(path, header=4)
+
+            # 🔧 NORMALISATION DES COLONNES
+            df = df.rename(columns={
+                "Text": "text",
+                "Topic": "target_group",
+                "In-Group": "In-Group",
+                "Out-group": "Out-group"
+            })
+
             print(f"✓ Loaded {len(df)} texts")
             print(f"  Columns: {list(df.columns)}")
             return df
     
-    raise FileNotFoundError("Could not find Toxigen.csv")
+    raise FileNotFoundError("Could not find Multilingual_EN_Corpus_DATA_FRENCH.xlsx")
 
 def analyze_important_edges(
-    edge_csv: str = "edge_importance_exp2.csv",
+    edge_csv: str = "edge_importance_exp4.csv",
     top_k: int = 20,
     show_context: bool = True,
 ):
@@ -211,7 +219,7 @@ def analyze_important_edges(
 if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument("--edges", default="edge_importance_exp2.csv", help="Edge importance CSV")
+    parser.add_argument("--edges", default="edge_importance_exp1.csv", help="Edge importance CSV")
     parser.add_argument("--top-k", type=int, default=20, help="Number of top edges to show")
     parser.add_argument("--no-context", action="store_true", help="Hide In-Group/Out-group context")
     args = parser.parse_args()

@@ -137,7 +137,7 @@ import glob
 import time
 import shutil
 from typing import Optional
-
+from sklearn.preprocessing import StandardScaler
 from preprocessing import (
     ToxigenDataset,
     LGBTEnDataset,
@@ -149,6 +149,7 @@ from preprocessing import (
 )
 from model import GCN, GCL
 from graph_learners import FGP_learner, ATT_learner, GNN_learner, MLP_learner
+from linguistique import extract_linguistic_features
 
 from utils import (
     save_loss_plot, ExperimentParameters, accuracy, get_feat_mask, symmetrize, normalize,
@@ -736,6 +737,11 @@ class Experiment:
             # Prefer dataset.data for metadata encoding
             if context_dataset is not None:
                 df_meta = context_dataset.data.reset_index(drop=True)
+                texts = df_meta["text"].fillna("").tolist()
+
+                linguistic_feats = extract_linguistic_features(texts)
+                scaler = StandardScaler()
+                linguistic_feats = scaler.fit_transform(linguistic_feats)
                 try:
                     meta_feats = encode_metadata(df_meta, args.context_columns)
                 except Exception as e:
