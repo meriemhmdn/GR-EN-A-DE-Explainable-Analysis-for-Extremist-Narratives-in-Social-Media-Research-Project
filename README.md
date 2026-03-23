@@ -103,14 +103,28 @@ Creates: `analysis_results/edge_analysis_full_report.txt` and `analysis_results/
 
 ### 7. Natural Language explainability
 ```bash
-# run the scripte for usin Deepseek with the scores of EXPASS
+
+# run the scripte for using Deepseek, LLama and Mistral models with the scores of EXPASS
+#if you used Toxigen Dataset:
 python generate_explanation_narrative.py
 
 # visualize an example
 python show_exp.py --index 6
-```
-Creates: `analysis_results/narrative_explanations.csv` 
 
+# if you're using french dataset
+# 1. Edge Level Explanation
+python generate_explanation_narrative_fr.py
+
+# 2. Chain Level Explanation
+
+python generate_explanation_narrative_chain.py
+```
+Creates: `analysis_results/narrative_explanations_all_models.csv` for Toxigen dataset
+
+
+Creates: `analysis_results/narrative_explanations_all_models_fr.csv` for French dataset edge level
+
+Creates: `analysis_results/narrative_explanations_chain_{model_key}.csv` for French dataset chain level
 ## Different Datasets
 
 ```bash
