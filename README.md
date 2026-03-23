@@ -130,6 +130,12 @@ Creates: `analysis_results/narrative_explanations_all_models.csv` for Toxigen da
 Creates: `analysis_results/narrative_explanations_all_models_fr.csv` for French dataset edge level
 
 Creates: `analysis_results/narrative_explanations_chain_{model_key}.csv` for French dataset chain level
+
+
+## Visualize the graph and importance scores
+```bash
+# use the notebook visualizations_notebook.ipynb
+```
 ## Different Datasets
 
 ```bash
