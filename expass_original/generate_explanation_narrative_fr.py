@@ -91,7 +91,7 @@ for model_key, model_name in models.items():
     df[f"explanation_{model_key}"] = narratives
 
 # Sauvegarde finale avec tous les modèles
-output_file = "analysis_results/narrative_explanations_all_models.csv"
+output_file = "analysis_results/narrative_explanations_all_models_fr.csv"
 df.to_csv(output_file, index=False)
 
 print("Saved:", output_file)
