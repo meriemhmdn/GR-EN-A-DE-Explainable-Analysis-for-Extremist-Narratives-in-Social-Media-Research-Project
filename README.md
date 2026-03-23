@@ -98,8 +98,13 @@ Shows detailed analysis with actual text from nodes
 ### 6. Save Analysis Report - TO ADAPT TO THE OTHER DATASET (CURRENTLY EXP1 SUPPORTED )
 ```bash
 python save_analysis_report.py
+
+# if you're using french dataset
+python save_report_french.py
+
 ```
-Creates: `analysis_results/edge_analysis_full_report.txt` and `analysis_results/top_100_edges_with_context.csv`
+Creates: `analysis_results/edge_analysis_full_report.txt` and `analysis_results/top_100_edges_with_context.csv` for toxigen dataset
+Creates: `analysis_results/edge_analysis_full_report_fr.txt` and `analysis_results/top_100_edges_with_context_fr.csv` for french dataset
 
 ### 7. Natural Language explainability
 ```bash
