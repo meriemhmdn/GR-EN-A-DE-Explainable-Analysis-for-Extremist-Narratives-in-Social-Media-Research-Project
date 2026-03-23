@@ -1,4 +1,23 @@
-<<<<<<< HEAD
+This project proposes an explainable pipeline for detecting and interpreting extremist narratives in text data by combining graph-based learning and natural language explanation generation.
+
+The pipeline integrates three main components:
+
+1. GR-EN-A-DE: A graph construction framework that models relationships between textual messages.
+2. EXPASS: An explainable graph neural network (GNN) approach used to classify nodes and identify important connections within the graph.
+3. GraphXAIN: A narrative explanation module that transforms structural explanations (e.g., important edges) into human-readable justifications.
+
+To enhance accessibility and reproducibility, we use a locally deployed large language model (DeepSeek) to generate natural language explanations, avoiding reliance on external APIs.
+
+The system operates in the following stages:
+- Graph construction from multilingual textual data
+- Semi-supervised node classification using GNNs
+- Extraction of important edges contributing to predictions
+- Generation of narrative explanations for these edges
+
+The goal of this work is to bridge the gap between graph-based explainability methods and human-understandable interpretations, particularly in sensitive contexts such as extremist content detection.
+
+Current work focuses on establishing a robust explainability pipeline. Future improvements include integrating linguistic features directly into the learning phase to enhance both performance and interpretability.
+
 # GRENADE-EXPASS Pipeline
 
 > Interpretable Graph Learning for Text Analysis
@@ -82,7 +101,15 @@ python save_analysis_report.py
 ```
 Creates: `analysis_results/edge_analysis_full_report.txt` and `analysis_results/top_100_edges_with_context.csv`
 
+### 7. Natural Language explainability
+```bash
+# run the scripte for usin Deepseek with the scores of EXPASS
+python generate_explanation_narrative.py
 
+# visualize an example
+python show_exp.py --index 6
+```
+Creates: `analysis_results/narrative_explanations.csv` 
 
 ## Different Datasets
 
@@ -182,6 +209,26 @@ python train.py --grenade-exp-nb 1 --arch gcn --explainer pgmexplainer --epochs 
 | **Input** | • Edge importance scores<br>• Original text content<br>• Metadata (In-Group/Out-group) |
 | **Process** | • Join edge scores with text<br>• Rank by importance<br>• Generate reports |
 | **Output** | • `top_100_edges_with_context.csv`<br>• `edge_analysis_full_report.txt` |
+
+### **Stage 4: Narrative Explanation Generation**
+> **LLM-based Human-Readable Explanations (GraphXAIN + DeepSeek)**
+
+| Component | Details |
+|-----------|---------|
+| **Input** | • `top_100_edges_with_context.csv`<br>• Edge importance scores<br>• Source & target messages<br>• Narrative attributes (labels, in-group/out-group) |
+| **Process** | • Construct structured prompts for each important edge<br>• Query a locally deployed LLM (DeepSeek)<br>• Generate natural language explanations for each connection<br>• Interpret why the GNN considers the edge important |
+| **Model** | • Local LLM: DeepSeek (via Ollama API)<br>• Endpoint: `http://localhost:11434/api/generate` |
+| **Output** | • `narrative_explanations.csv` (with `graphxain_explanation` column) |
+
+---
+
+This stage bridges the gap between **graph-based explainability** and **human-understandable narratives** by transforming structural signals (important edges) into coherent textual justifications.
+
+Unlike traditional explainability methods, this approach provides **context-aware explanations**, incorporating:
+- semantic relationships between messages  
+- narrative dynamics (agreement, hostility, moral framing)  
+- in-group vs out-group language signals
+  
 ## Citation
 
 ```bibtex
@@ -193,11 +240,15 @@ python train.py --grenade-exp-nb 1 --arch gcn --explainer pgmexplainer --epochs 
   year={2022}
 }
 ```
+```bibtex
+@article{graphxain2025,
+  title={GraphXAIN: Narratives to Explain Graph Neural Networks},
+  author={Cedro, Mateusz and Martens, David},
+  journal={arXiv preprint arXiv:2411.02540},
+  year={2025},
+  url={https://arxiv.org/abs/2411.02540}
+}
+```
 
-## License
-
-MIT License - see repository for details
 =======
-# GR-EN-A-DE-explainability-Research-Project
-This project proposes an explainable pipeline for detecting and interpreting extremist narratives in text data by combining graph-based learning and natural language explanation generation.
->>>>>>> d9c49e8bafb57cb0ba2e47a22040ae11f6f82ab9
+
